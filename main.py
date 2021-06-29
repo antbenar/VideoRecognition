@@ -14,9 +14,6 @@ query_string = dict({"unix_socket": "/cloudsql/{}".format(connection_name)})
 
 yt_base= "https://www.youtube.com/watch?v="
 
-#prototxt= 'https://storage.googleapis.com/videos_recognition/ModeloCaffe/MobileNetSSD_deploy.prototxt.txt'
-#weights = 'https://storage.googleapis.com/videos_recognition/ModeloCaffe/MobileNetSSD_deploy.caffemodel'
-
 prototxt= 'MobileNetSSD_deploy.prototxt.txt'
 weights = 'MobileNetSSD_deploy.caffemodel'
 
@@ -92,8 +89,7 @@ def start():
         context (google.cloud.functions.Context): Metadata for the event.
   """
 
-  #video_url = "https://storage.googleapis.com/{}/{}".format(file['bucket'], file['name'])
-  video_url = "cars1.mp4"
+  video_url = "https://storage.googleapis.com/{}/{}".format(file['bucket'], file['name'])
 
   videocap = cv2.VideoCapture(video_url)
 
@@ -102,10 +98,10 @@ def start():
     vname = video_url[:-4]
     labels = get_labels(videocap)
     print(labels)
-    #print("video processed")
-    #saved = write(vname, labels, video_url)
-    #if saved:
-    #  print("video saved")
+    print("video processed")
+    saved = write(vname, labels, video_url)
+    if saved:
+      print("video saved")
   else:
     print("Not Working")
 
