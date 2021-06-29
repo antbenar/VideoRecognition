@@ -85,25 +85,29 @@ def get_labels(video, nclasess=21):
     classes.append(v/float(c))
   return classes
 
-def start(event, context):
+def start():
   """Triggered by a change to a Cloud Storage bucket.
   Args:
         event (dict): Event payload.
         context (google.cloud.functions.Context): Metadata for the event.
   """
-  file = event
 
-  video_url = "https://storage.googleapis.com/{}/{}".format(file['bucket'], file['name'])
+  #video_url = "https://storage.googleapis.com/{}/{}".format(file['bucket'], file['name'])
+  video_url = "cars1.mp4"
 
   videocap = cv2.VideoCapture(video_url)
 
   if videocap.isOpened():
     print ("File Can be Opened")
-    vname = file['name'][:-4]
+    vname = video_url[:-4]
     labels = get_labels(videocap)
-    print("video processed")
-    saved = write(vname, labels, video_url)
-    if saved:
-      print("video saved")
+    print(labels)
+    #print("video processed")
+    #saved = write(vname, labels, video_url)
+    #if saved:
+    #  print("video saved")
   else:
     print("Not Working")
+
+
+start()
