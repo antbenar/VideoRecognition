@@ -64,15 +64,17 @@ def get_videos(word):
   }
   stmt = sqlalchemy.select([table]).where(classNames[word] > 0.0)
   videos = []
-  try:
-    with db.connect() as conn:
-      for r in conn.execute(stmt):
-        print(r)
-        v = Video(r['cnombre'], r[classNames[word]], r['clinkbucket'])
-        v.get_miniature()
-        videos.append(v)
-  except Exception as e:
-    print('Error: {}'.format(str(e)))
+
+  if word in classNames:
+    try:
+      with db.connect() as conn:
+        for r in conn.execute(stmt):
+          print(r)
+          v = Video(r['cnombre'], r[classNames[word]], r['clinkbucket'])
+          v.get_miniature()
+          videos.append(v)
+    except Exception as e:
+      print('Error: {}'.format(str(e)))
   
   return videos
 
