@@ -10,7 +10,6 @@
     {% for video in videos %}
       <style type="text/css">
         .bgimg {
-          background-image: url('{{video.Miniature}}');
           background-size: 100% auto;
           background-repeat: no-repeat;
           width: 100%;
@@ -18,12 +17,14 @@
         }
       </style>
       <li>
-        <div class="bgimg">
-        <h2>{{video.Confidence}}</h2>
-        <h3>{{video.Name}}</h3>
-        <!-- <h3>({{video.confidence}})</h3> -->
-        <button><a href={{video.YtLink}}> ver en YouTube </a></button>
-        <button><a href={{video.BucketLink}}> ver en YouTube </a></button>
+
+        <div>
+          <img class="bgimg" src="{{video.Miniature}}" width="200" height="100%">
+          <h2>{{video.Confidence}}</h2>
+          <h3>{{video.Name}}</h3>
+          <!-- <h3>({{video.confidence}})</h3> -->
+          <button><a href={{video.YtLink}}> ver en YouTube </a></button>
+          <button><a href={{video.BucketLink}}> ver en YouTube </a></button>
         </div>
       </li>
     {% endfor %}
