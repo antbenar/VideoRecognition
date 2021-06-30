@@ -34,7 +34,7 @@ class Video:
     retval, image = cap.read()
     retval, buffer = cv2.imencode('.jpg', image)
     mini = base64.b64encode(buffer)
-    self.Miniature = "data:image/jpeg;base64," + mini
+    self.Miniature = "data:image/jpeg;base64," + str(mini)
     
 def get_videos(word):
   meta = sqlalchemy.MetaData(bind=None)
