@@ -34,6 +34,7 @@ class Video:
     retval, image = cap.read()
     retval, buffer = cv2.imencode('.jpg', image)
     mini = base64.b64encode(buffer)
+    mini = base64.b64decode(mini)
     self.Miniature = "data:image/jpeg;base64," + str(mini)
     
 def get_videos(word):
