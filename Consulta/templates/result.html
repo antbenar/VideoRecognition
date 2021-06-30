@@ -1,0 +1,35 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/list.css') }}" media="screen"/>
+  <title>Media Search</title>
+</head>
+<body>
+  <h1>Videos relacionados con {{word}}</h1>
+  {% if videos %}
+    <ul class="tilesWrap">
+    {% for video in videos %}
+      <style type="text/css">
+        .bgimg {
+          background-image: url('{{video.Miniature}}');
+          background-size: 100% auto;
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 100%
+        }
+      </style>
+      <li>
+        <div class="bgimg">
+        <h2>{{video.Confidence}}</h2>
+        <h3>{{video.Name}}</h3>
+        <!-- <h3>({{video.confidence}})</h3> -->
+        <button><a href={{video.YtLink}}> ver en YouTube </a></button>
+        <button><a href={{video.BucketLink}}> ver en YouTube </a></button>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+      <h1>No hay videos etiquetados con {{word}}</h1>
+  {% endif %}
+</body>
+</html>
