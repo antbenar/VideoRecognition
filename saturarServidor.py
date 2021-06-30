@@ -1,6 +1,6 @@
 import requests
 
-url = 'https://www.w3schools.com/python/demopage.php'
+url = 'https://us-central1-proyecto-final-cloud-318204.cloudfunctions.net/fxConsultaVideo'
 myobj = {'keyword': 'cars'}
 
 x = requests.post(url, data = myobj)
