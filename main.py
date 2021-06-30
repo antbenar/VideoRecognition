@@ -1,13 +1,11 @@
 import os
-# import datetime
-# from google.cloud import storage
 import cv2
 import numpy as np
-#import sqlalchemy
+import sqlalchemy
 
-connection_name = "clouducsp:us-central1:taggedmedia"
-db_password = "root"
-db_name = "clouducsp"
+connection_name = "proyecto-final-cloud-318204:us-central1:video-recognition-db"
+db_password = "1234"
+db_name = "VideoRecognitionDB"
 db_user = "root"
 driver_name = 'mysql+pymysql'
 query_string = dict({"unix_socket": "/cloudsql/{}".format(connection_name)})
@@ -32,8 +30,8 @@ def write(videoname,labels, videolink):
   
   meta = sqlalchemy.MetaData(bind=None)
   try:
-    table = sqlalchemy.Table('videos', meta, autoload=True, autoload_with=db)
-    print('using videos table')
+    table = sqlalchemy.Table('sis_m_video', meta, autoload=True, autoload_with=db)
+    print('using sis_m_video table')
   except Exception as e:
     print('Error: {}'.format(str(e)))
     return
@@ -68,18 +66,17 @@ def get_labels(video, nclasess=21):
     detections = net.forward()
     for i in range(detections.shape[2]):
       confidence = detections[0,0,i,2]
-      if confidence < 0.25:
-        continue
-      clas = int(detections[0,0,i,1])
-      classes_val[clas]+= confidence
-      classes_cont[clas]+= 1
+      if confidence > 0.25:
+        clas = int(detections[0,0,i,1])
+        classes_val[clas]+= confidence
+        classes_cont[clas]+= 1
     ret, frame = video.read()
   classes = []
   for v, c in zip(classes_val, classes_cont):
     if c == 0:
       classes.append(0.0)
-      continue
-    classes.append(v/float(c))
+    else:
+      classes.append(v/float(c))
   return classes
 
 def start():
@@ -96,6 +93,7 @@ def start():
   if videocap.isOpened():
     print ("File Can be Opened")
     vname = video_url[:-4]
+
     labels = get_labels(videocap)
     print(labels)
     print("video processed")
