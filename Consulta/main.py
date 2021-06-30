@@ -62,10 +62,11 @@ def get_videos(word):
     'train': table.c.netq19,'tren': table.c.netq19,
     'tvmonitor': table.c.netq20,'tv': table.c.netq20,'monitor': table.c.netq20,'pantalla': table.c.netq20,
   }
-  stmt = sqlalchemy.select([table]).where(classNames[word] > 0.0)
+  
   videos = []
 
   if word in classNames:
+    stmt = sqlalchemy.select([table]).where(classNames[word] > 0.0)
     try:
       with db.connect() as conn:
         for r in conn.execute(stmt):

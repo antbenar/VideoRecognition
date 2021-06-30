@@ -28,3 +28,5 @@ CREATE TABLE sis_m_video(
     netq20 float ,
     PRIMARY KEY (ncodigo)
 );
+
+/*delete  from sis_m_video*/
