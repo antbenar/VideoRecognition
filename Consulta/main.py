@@ -1,6 +1,7 @@
 from flask import Flask#, request #import main Flask class and request object
 from flask import render_template as render
 import sqlalchemy
+import cv2
 import numpy as np
 import base64
 
