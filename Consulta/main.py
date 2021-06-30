@@ -38,7 +38,7 @@ class Video:
     
 def get_videos(word):
   meta = sqlalchemy.MetaData(bind=None)
-  table = sqlalchemy.Table('entries',meta, autoload=True, autoload_with=db)
+  table = sqlalchemy.Table('sis_m_video',meta, autoload=True, autoload_with=db)
   classNames = { 'background': table.c.netq0,
     'aeroplane': table.c.netq1,'plane': table.c.netq1,'avion': table.c.netq1,
     'bicycle': table.c.netq2,'bicicleta': table.c.netq2,
