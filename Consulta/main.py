@@ -31,8 +31,9 @@ class Video:
 
   def get_miniature(self):
     cap = cv2.VideoCapture(self.BucketLink)
-    retval, image = cap.read()
-    retval, buffer = cv2.imencode('.jpg', image)
+    _, image = cap.read()
+    resized = cv2.resize(image, (300,250), interpolation = cv2.INTER_AREA)
+    _, buffer = cv2.imencode('.jpg', resized)
     mini = base64.b64encode(buffer)
     self.Miniature = "data:image/jpeg;base64," + str(mini.decode("utf-8"))
     
