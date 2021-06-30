@@ -30,8 +30,8 @@ def write(videoname,labels, videolink):
   
   meta = sqlalchemy.MetaData(bind=None)
   try:
-    table = sqlalchemy.Table('videos', meta, autoload=True, autoload_with=db)
-    print('using videos table')
+    table = sqlalchemy.Table('sis_m_video', meta, autoload=True, autoload_with=db)
+    print('using sis_m_video table')
   except Exception as e:
     print('Error: {}'.format(str(e)))
     return
@@ -45,40 +45,6 @@ def write(videoname,labels, videolink):
            LB12=float(labels[12]), LB13=float(labels[13]), LB14=float(labels[14]), LB15=float(labels[15]),
            LB16=float(labels[16]), LB17=float(labels[17]), LB18=float(labels[18]), LB19=float(labels[19]), LB20=float(labels[20]))
   )
-
-
-  """
-  CREATE DATABASE VideoRecognitionDB;
-  USE DATABASE VideoRecognitionDB;
-
-  CREATE TABLE sis_m_video(
-    ncodigo SERIAL NOT NULL,
-    cnombre varchar,
-    clinkbucket,
-    netq0 integer,
-    netq1 integer,
-    netq2 integer,
-    netq3 integer,
-    netq4 integer,
-    netq5 integer,
-    netq6 integer,
-    netq7 integer,
-    netq8 integer,
-    netq9 integer,
-    netq10 integer,
-    netq11 integer,
-    netq12 integer,
-    netq13 integer,
-    netq14 integer,
-    netq15 integer,
-    netq16 integer,
-    netq17 integer,
-    netq18 integer,
-    netq19 integer,
-    netq20 integer,
-    PRIMARY KEY (ncodigo)
-  );
-  """
   
   try:
     with db.connect() as conn:
@@ -113,12 +79,13 @@ def get_labels(video, nclasess=21):
       classes.append(v/float(c))
   return classes
 
-def start():
+def start(event, context):
   """Triggered by a change to a Cloud Storage bucket.
   Args:
         event (dict): Event payload.
         context (google.cloud.functions.Context): Metadata for the event.
   """
+  file = event
 
   video_url = "https://storage.googleapis.com/{}/{}".format(file['bucket'], file['name'])
 
@@ -126,15 +93,11 @@ def start():
 
   if videocap.isOpened():
     print ("File Can be Opened")
-    vname = video_url[:-4]
+    vname = file['name'][:-4]
     labels = get_labels(videocap)
-    print(labels)
     print("video processed")
     saved = write(vname, labels, video_url)
     if saved:
       print("video saved")
   else:
     print("Not Working")
-
-
-start()
