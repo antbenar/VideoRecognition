@@ -38,12 +38,12 @@ def write(videoname,labels, videolink):
   
   stmt = (
     sqlalchemy.insert(table).
-    values(videoName=videoname, youtubeLink=yt_base+videoname, bucketLink=videolink,
-           LB00=float(labels[0]), LB01=float(labels[1]), LB02=float(labels[2]),LB03=float(labels[3]),
-           LB04=float(labels[4]), LB05=float(labels[5]), LB06=float(labels[6]), LB07=float(labels[7]),
-           LB08=float(labels[8]), LB09=float(labels[9]), LB10=float(labels[10]), LB11=float(labels[11]),
-           LB12=float(labels[12]), LB13=float(labels[13]), LB14=float(labels[14]), LB15=float(labels[15]),
-           LB16=float(labels[16]), LB17=float(labels[17]), LB18=float(labels[18]), LB19=float(labels[19]), LB20=float(labels[20]))
+    values(cnombre=videoname, clinkbucket=videolink,
+           netq0=float(labels[0]), netq1=float(labels[1]), netq2=float(labels[2]),netq3=float(labels[3]),
+           netq4=float(labels[4]), netq5=float(labels[5]), netq6=float(labels[6]), netq7=float(labels[7]),
+           netq8=float(labels[8]), netq9=float(labels[9]), netq10=float(labels[10]), netq11=float(labels[11]),
+           netq12=float(labels[12]), netq13=float(labels[13]), netq14=float(labels[14]), netq15=float(labels[15]),
+           netq16=float(labels[16]), netq17=float(labels[17]), netq18=float(labels[18]), netq19=float(labels[19]), netq20=float(labels[20]))
   )
   
   try:
