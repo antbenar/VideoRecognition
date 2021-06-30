@@ -65,6 +65,7 @@ def get_videos(word):
   videos = []
   try:
     with db.connect() as conn:
+      print(conn.execute(stmt))
       for r in conn.execute(stmt):
         v = Video(r['cnombre'], r[classNames[word]], r['clinkbucket'])
         v.get_miniature()
