@@ -1,36 +1,98 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="/static/css/list.css" media="screen"/>
-  <title>Media Search</title>
+  <title>Acix</title>
+    <style type="text/css">
+      body{
+          font-family: Arial, Helvetica, sans-serif;
+          margin: 0;
+      }
+
+      .header{
+          background-color:#2e9db6;
+          height: 80px;
+      }
+
+      .footer{
+          margin-top: 20px;
+          background-color:#2e9db6;
+          height: 60px;
+      }
+
+      .content{
+          min-height: calc(100vh - 180px);
+      }
+
+
+      .title-header{
+          color: white;
+          padding: 25px 20px;
+      }
+
+      .title{
+          margin: 40px 0;
+          width: 100%;
+          text-align: center;
+      }
+
+      .contenedor-video{
+          display: flex;
+          width: 75%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 10px;
+
+          padding:10px; 
+          background: linear-gradient(0.45turn, white, #f7f2e8);
+      }
+
+      .contenedor-video a{
+          display: inline-block;
+          width: 40%;
+          height: 200px;
+      }
+
+      .contenedor-video a img{
+          width: 100%;
+          height: 200px;
+          object-fit: scale-down; 
+          object-position: 50% 50%;
+      }
+
+      .contenedor-video .contenido{
+          display: block;
+          width: 80%;
+          padding: 20px;
+          align-content: center;
+          margin-top: auto;
+          margin-bottom: auto;
+      }
+    </style>
 </head>
 <body>
-  <h1>Videos relacionados con {{word}}</h1>
-  {% if videos %}
-    <ul class="tilesWrap">
-    {% for video in videos %}
-      <style type="text/css">
-        .bgimg {
-          background-size: 100% auto;
-          background-repeat: no-repeat;
-          width: 100%;
-          height: 100%
-        }
-      </style>
-      <li>
-
-        <div>
-          <img class="bgimg" src="{{video.Miniature}}" width="200" height="100%">
-          <h2>{{video.Confidence}}</h2>
-          <h3>{{video.Name}}</h3>
-          <!-- <h3>({{video.confidence}})</h3> -->
-          <button><a href={{video.YtLink}}> ver en YouTube </a></button>
-          <button><a href={{video.BucketLink}}> ver en YouTube </a></button>
-        </div>
-      </li>
-    {% endfor %}
-    </ul>
-  {% else %}
-      <h1>No hay videos etiquetados con {{word}}</h1>
-  {% endif %}
+  <div class="header">
+    <h2 class="title-header">Video Recognition - Cloud computing</h2>
+  </div>
+  <div class="content">
+    <h2 class="title">Videos relacionados con <i>{{word}}</i></h2>
+    {% if videos %}
+      <ul>
+      {% for video in videos %}
+        <li class="contenedor-video">
+            <a href="{{video.BucketLink}}">
+              <img src="{{video.Miniature}}">
+            </a>
+            <div class="contenido">
+              <h2 class="descripcion">Video de {{video.Name}}</h2>
+              <h4 class="confidencia">Similaridad del objeto: <spam>{{video.Confidence}}</spam></h4>
+            </div>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <h2>No se encontró coincidencias de videos con <i>{{word}}</i></h2>
+    {% endif %}
+    
+    </div>
+    <div class="footer"></div>
 </body>
 </html>
