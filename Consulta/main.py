@@ -24,11 +24,11 @@ db = sqlalchemy.create_engine(sqlalchemy.engine.url.URL(drivername=driver_name,
 
 
 class Video:
-  def __init__(self, name, confidence, ytlink, bklink):
+  def __init__(self, name, confidence, bklink):
     self.Name = name
     self.Confidence = confidence
-    self.YtLink = ytlink
     self.BucketLink = bklink
+
   def get_miniature(self):
     cap = cv2.VideoCapture(self.BucketLink)
     retval, image = cap.read()
@@ -39,34 +39,34 @@ class Video:
 def get_videos(word):
   meta = sqlalchemy.MetaData(bind=None)
   table = sqlalchemy.Table('entries',meta, autoload=True, autoload_with=db)
-  classNames = { 'background': table.c.LB00,
-    'aeroplane': table.c.LB01,'plane': table.c.LB01,'avion': table.c.LB01,
-    'bicycle': table.c.LB02,'bicicleta': table.c.LB02,
-    'bird': table.c.LB03,'ave': table.c.LB03,'pajaro': table.c.LB03,
-    'boat': table.c.LB04,'bote': table.c.LB04,
-    'bottle': table.c.LB05,'botella': table.c.LB05,
-    'bus': table.c.LB06,'autobus': table.c.LB06,
-    'car': table.c.LB07,'carro': table.c.LB07,'auto': table.c.LB07,
-    'cat': table.c.LB08,'gato': table.c.LB08,
-    'chair': table.c.LB09,'silla': table.c.LB09,
-    'cow': table.c.LB10,'vaca': table.c.LB10,
-    'diningtable': table.c.LB11,'table': table.c.LB11,'mesa': table.c.LB11,'cena': table.c.LB11,
-    'dog': table.c.LB12,'perro': table.c.LB12,
-    'horse': table.c.LB13,'caballo': table.c.LB13,
-    'motorbike': table.c.LB14,'moto': table.c.LB14,'motocicleta': table.c.LB14,
-    'person': table.c.LB15,'persona': table.c.LB15,
-    'pottedplant': table.c.LB16,'plant': table.c.LB16,'maceta': table.c.LB16,
-    'sheep': table.c.LB17,'oveja': table.c.LB17,
-    'sofa': table.c.LB18,'sillon': table.c.LB18,
-    'train': table.c.LB19,'tren': table.c.LB19,
-    'tvmonitor': table.c.LB20,'tv': table.c.LB20,'monitor': table.c.LB20,'pantalla': table.c.LB20,
+  classNames = { 'background': table.c.netq0,
+    'aeroplane': table.c.netq1,'plane': table.c.netq1,'avion': table.c.netq1,
+    'bicycle': table.c.netq2,'bicicleta': table.c.netq2,
+    'bird': table.c.netq3,'ave': table.c.netq3,'pajaro': table.c.netq3,
+    'boat': table.c.netq4,'bote': table.c.netq4,
+    'bottle': table.c.netq5,'botella': table.c.netq5,
+    'bus': table.c.netq6,'autobus': table.c.netq6,
+    'car': table.c.netq7,'carro': table.c.netq7,'auto': table.c.netq7,
+    'cat': table.c.netq8,'gato': table.c.netq8,
+    'chair': table.c.netq9,'silla': table.c.netq9,
+    'cow': table.c.netq10,'vaca': table.c.netq10,
+    'diningtable': table.c.netq11,'table': table.c.netq11,'mesa': table.c.netq11,'cena': table.c.netq11,
+    'dog': table.c.netq12,'perro': table.c.netq12,
+    'horse': table.c.netq13,'caballo': table.c.netq13,
+    'motorbike': table.c.netq14,'moto': table.c.netq14,'motocicleta': table.c.netq14,
+    'person': table.c.netq15,'persona': table.c.netq15,
+    'pottedplant': table.c.netq16,'plant': table.c.netq16,'maceta': table.c.netq16,
+    'sheep': table.c.netq17,'oveja': table.c.netq17,
+    'sofa': table.c.netq18,'sillon': table.c.netq18,
+    'train': table.c.netq19,'tren': table.c.netq19,
+    'tvmonitor': table.c.netq20,'tv': table.c.netq20,'monitor': table.c.netq20,'pantalla': table.c.netq20,
   }
   stmt = sqlalchemy.select([table]).where(classNames[word] > 0.0)
   videos = []
   try:
     with db.connect() as conn:
       for r in conn.execute(stmt):
-        v = Video(r['videoName'], r[classNames[word]], r['youtubeLink'], r['bucketLink'])
+        v = Video(r['cnombre'], r[classNames[word]], r['clinkbucket'])
         v.get_miniature()
         videos.append(v)
   except Exception as e:
